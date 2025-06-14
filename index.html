@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tripnic - Smart Travel Companion</title>
+    <meta name="description" content="Find your perfect travel companion with Tripnic's intelligent matching system. Connect, plan, and explore together.">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" as="style">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Libraries -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-map-marked-alt"></i>
+                <span>Tripnic</span>
+            </div>
+            <div class="loading-animation">
+                <div class="plane">
+                    <i class="fas fa-plane"></i>
+                </div>
+                <div class="loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
+        <div class="container">
+            <a class="navbar-brand" href="#" data-aos="fade-right">
+                <div class="brand-logo">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Tripnic</span>
+                </div>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto" data-aos="fade-left">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#how-it-works">How It Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">Reviews</a>
+                    </li>
+                    <li class="nav-item" id="loginNav">
+                        <button class="btn btn-outline-primary me-2" onclick="showAuthModal('login')">
+                            <i class="fas fa-sign-in-alt me-1"></i>Login
+                        </button>
+                    </li>
+                    <li class="nav-item" id="signupNav">
+                        <button class="btn btn-gradient" onclick="showAuthModal('signup')">
+                            <i class="fas fa-rocket me-1"></i>Get Started
+                        </button>
+                    </li>
+                    <li class="nav-item dropdown hidden" id="userNav">
+                        <a class="nav-link dropdown-toggle user-nav" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <div class="user-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <span id="userName">User</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#" onclick="showDashboard()">
+                                <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                            </a></li>
+                            <li><a class="dropdown-item" href="#" onclick="logout()">
+                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                            </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div id="particles-js"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-6 hero-content">
+                    <div class="hero-badge" data-aos="fade-up" data-aos-delay="100">
+                        <i class="fas fa-star"></i>
+                        <span>Trusted by 50,000+ Travelers</span>
+                    </div>
+                    
+                    <h1 class="hero-title" data-aos="fade-up" data-aos-delay="200">
+                        Find Your Perfect
+                        <span class="gradient-text">Travel Companion</span>
+                    </h1>
+                    
+                    <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="300">
+                        Connect with like-minded travelers, plan amazing trips together, and create unforgettable memories with Tripnic's intelligent matching system.
+                    </p>
+                    
+                    <div class="hero-stats" data-aos="fade-up" data-aos-delay="400">
+                        <div class="stat-item">
+                            <div class="stat-number">50K+</div>
+                            <div class="stat-label">Active Travelers</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">120+</div>
+                            <div class="stat-label">Countries</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-actions" data-aos="fade-up" data-aos-delay="500">
+                        <button class="btn btn-gradient btn-lg me-3" onclick="showAuthModal('signup')">
+                            <i class="fas fa-rocket me-2"></i>Start Your Journey
+                            <div class="btn-shine"></div>
+                        </button>
+                        <button class="btn btn-outline-light btn-lg" onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})">
+                            <i class="fas fa-play-circle me-2"></i>Watch Demo
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left" data-aos-delay="600">
+                    <div class="hero-visual">
+                        <div class="floating-cards">
+                            <div class="travel-card card-1">
+                                <div class="card-avatar">
+                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612d5f1?w=60&h=60&fit=crop&crop=face" alt="Traveler">
+                                </div>
+                                <div class="card-content">
+                                    <h6>Sarah</h6>
+                                    <p>Beach Explorer</p>
+                                    <div class="match-score">95% Match</div>
+                                </div>
+                            </div>
+                            
+                            <div class="travel-card card-2">
+                                <div class="card-avatar">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" alt="Traveler">
+                                </div>
+                                <div class="card-content">
+                                    <h6>Mike</h6>
+                                    <p>Adventure Seeker</p>
+                                    <div class="match-score">92% Match</div>
+                                </div>
+                            </div>
+                            
+                            <div class="travel-card card-3">
+                                <div class="card-avatar">
+                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" alt="Traveler">
+                                </div>
+                                <div class="card-content">
+                                    <h6>Emma</h6>
+                                    <p>Culture Enthusiast</p>
+                                    <div class="match-score">89% Match</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="hero-illustration">
+                            <div class="globe-container">
+                                <div class="globe">
+                                    <div class="globe-inner"></div>
+                                    <div class="connection-lines">
+                                        <div class="line line-1"></div>
+                                        <div class="line line-2"></div>
+                                        <div class="line line-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator" data-aos="fade-up" data-aos-delay="800">
+            <div class="scroll-text">Scroll to explore</div>
+            <div class="scroll-arrow">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header text-center" data-aos="fade-up">
+                <div class="section-badge">
+                    <i class="fas fa-star"></i>
+                    <span>Features</span>
+                </div>
+                <h2 class="section-title">Why Choose Tripnic?</h2>
+                <p class="section-subtitle">Discover the features that make travel planning effortless and social</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <div class="icon-bg">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h4>Smart Matching</h4>
+                    <p>Our AI-powered algorithm matches you with compatible travel companions based on your preferences, budget, and travel style.</p>
+                    <div class="feature-link">
+                        <span>Learn more</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <div class="icon-bg">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h4>Real-time Chat</h4>
+                    <p>Connect instantly with potential travel buddies through our secure, encrypted messaging system with translation support.</p>
+                    <div class="feature-link">
+                        <span>Learn more</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon">
+                        <div class="icon-bg">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h4>Smart Itinerary</h4>
+                    <p>Collaboratively create detailed itineraries with AI suggestions, integrated maps, and real-time budget tracking.</p>
+                    <div class="feature-link">
+                        <span>Learn more</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon">
+                        <div class="icon-bg">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h4>Safe & Secure</h4>
+                    <p>Verified profiles, end-to-end encryption, background checks, and community reviews ensure your safety.</p>
+                    <div class="feature-link">
+                        <span>Learn more</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-icon">
+                        <div class="icon-bg">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h4>Smart Wallet</h4>
+                    <p>Manage shared expenses, split bills automatically, and track budgets with our integrated payment system.</p>
+                    <div class="feature-link">
+                        <span>Learn more</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+                
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-icon">
+                        <div class="icon-bg">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h4>Mobile First</h4>
+                    <p>Access Tripnic anywhere with our progressive web app that works seamlessly across all devices.</p>
+                    <div class="feature-link">
+                        <span>Learn more</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works-section">
+        <div class="container">
+            <div class="section-header text-center" data-aos="fade-up">
+                <div class="section-badge">
+                    <i class="fas fa-route"></i>
+                    <span>Process</span>
+                </div>
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">Get started in just three simple steps</p>
+            </div>
+            
+            <div class="steps-container">
+                <div class="step-item" data-aos="fade-right" data-aos-delay="100">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <div class="step-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <h4>Create Your Profile</h4>
+                        <p>Tell us about your travel preferences, interests, budget, and dream destinations. Our AI learns your style.</p>
+                        <ul class="step-features">
+                            <li><i class="fas fa-check"></i>Personality assessment</li>
+                            <li><i class="fas fa-check"></i>Travel preferences</li>
+                            <li><i class="fas fa-check"></i>Budget planning</li>
+                        </ul>
+                    </div>
+                    <div class="step-visual">
+                        <div class="profile-mockup">
+                            <div class="profile-header"></div>
+                            <div class="profile-content">
+                                <div class="profile-line"></div>
+                                <div class="profile-line short"></div>
+                                <div class="profile-tags">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-item reverse" data-aos="fade-left" data-aos-delay="200">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <div class="step-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h4>Find Your Match</h4>
+                        <p>Browse through compatible travelers or let our intelligent algorithm suggest the perfect matches for you.</p>
+                        <ul class="step-features">
+                            <li><i class="fas fa-check"></i>AI-powered matching</li>
+                            <li><i class="fas fa-check"></i>Compatibility scores</li>
+                            <li><i class="fas fa-check"></i>Advanced filters</li>
+                        </ul>
+                    </div>
+                    <div class="step-visual">
+                        <div class="matching-mockup">
+                            <div class="match-cards">
+                                <div class="match-card active">
+                                    <div class="match-avatar"></div>
+                                    <div class="match-info">
+                                        <div class="match-name"></div>
+                                        <div class="match-score">95%</div>
+                                    </div>
+                                </div>
+                                <div class="match-card">
+                                    <div class="match-avatar"></div>
+                                    <div class="match-info">
+                                        <div class="match-name"></div>
+                                        <div class="match-score">87%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-item" data-aos="fade-right" data-aos-delay="300">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <div class="step-icon">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <h4>Plan & Travel</h4>
+                        <p>Connect with your travel buddies, plan your itinerary together, and embark on amazing adventures.</p>
+                        <ul class="step-features">
+                            <li><i class="fas fa-check"></i>Collaborative planning</li>
+                            <li><i class="fas fa-check"></i>Real-time updates</li>
+                            <li><i class="fas fa-check"></i>Expense tracking</li>
+                        </ul>
+                    </div>
+                    <div class="step-visual">
+                        <div class="planning-mockup">
+                            <div class="itinerary-header"></div>
+                            <div class="itinerary-items">
+                                <div class="itinerary-item"></div>
+                                <div class="itinerary-item"></div>
+                                <div class="itinerary-item"></div>
+                            </div>
+                            <div class="planning-actions">
+                                <div class="action-btn"></div>
+                                <div class="action-btn"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="container">
+            <div class="section-header text-center" data-aos="fade-up">
+                <div class="section-badge">
+                    <i class="fas fa-heart"></i>
+                    <span>Testimonials</span>
+                </div>
+                <h2 class="section-title">What Our Travelers Say</h2>
+                <p class="section-subtitle">Real stories from real travelers who found their perfect companions</p>
+            </div>
+            
+            <div class="swiper testimonials-swiper" data-aos="fade-up" data-aos-delay="200">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"Tripnic helped me find the perfect travel companion for my solo Europe trip. We had an amazing time exploring 8 countries together and are now planning our next adventure!"</p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
+                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612d5f1?w=60&h=60&fit=crop&crop=face" alt="Sarah Johnson">
+                                </div>
+                                <div class="author-info">
+                                    <h6>Sarah Johnson</h6>
+                                    <span>Traveled to 8 countries</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"The matching algorithm is incredible! I found someone with the exact same interests and budget. Our Bali trip was absolutely perfect, and we're already best friends."</p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" alt="Mike Chen">
+                                </div>
+                                <div class="author-info">
+                                    <h6>Mike Chen</h6>
+                                    <span>Adventure Enthusiast</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="swiper-slide">
+                        <div class="testimonial-card">
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"As a solo female traveler, safety was my biggest concern. Tripnic's verification system and community reviews gave me confidence to travel with new people."</p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
+                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" alt="Emma Davis">
+                                </div>
+                                <div class="author-info">
+                                    <h6>Emma Davis</h6>
+                                    <span>Solo Traveler</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content text-center" data-aos="fade-up">
+                <h2 class="cta-title">Ready to Find Your Travel Companion?</h2>
+                <p class="cta-subtitle">Join thousands of travelers who have found their perfect match</p>
+                <div class="cta-actions">
+                    <button class="btn btn-gradient btn-lg" onclick="showAuthModal('signup')">
+                        <i class="fas fa-rocket me-2"></i>Start Your Journey
+                        <div class="btn-shine"></div>
+                    </button>
+                </div>
+                <div class="cta-features">
+                    <div class="cta-feature">
+                        <i class="fas fa-check"></i>
+                        <span>Free to join</span>
+                    </div>
+                    <div class="cta-feature">
+                        <i class="fas fa-check"></i>
+                        <span>Verified profiles</span>
+                    </div>
+                    <div class="cta-feature">
+                        <i class="fas fa-check"></i>
+                        <span>24/7 support</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="footer-brand">
+                            <div class="brand-logo">
+                                <i class="fas fa-map-marked-alt"></i>
+                                <span>Tripnic</span>
+                            </div>
+                            <p>Connecting travelers worldwide to create unforgettable journeys together.</p>
+                            <div class="social-links">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-2 col-md-6 mb-4">
+                        <h6 class="footer-title">Platform</h6>
+                        <ul class="footer-links">
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#how-it-works">How it Works</a></li>
+                            <li><a href="#testimonials">Reviews</a></li>
+                            <li><a href="#">Pricing</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col-lg-2 col-md-6 mb-4">
+                        <h6 class="footer-title">Support</h6>
+                        <ul class="footer-links">
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Safety</a></li>
+                            <li><a href="#">Community</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col-lg-2 col-md-6 mb-4">
+                        <h6 class="footer-title">Company</h6>
+                        <ul class="footer-links">
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Press</a></li>
+                            <li><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col-lg-2 col-md-6 mb-4">
+                        <h6 class="footer-title">Legal</h6>
+                        <ul class="footer-links">
+                            <li><a href="#">Privacy</a></li>
+                            <li><a href="#">Terms</a></li>
+                            <li><a href="#">Cookies</a></li>
+                            <li><a href="#">GDPR</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p>&copy; 2024 Tripnic. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <div class="footer-badges">
+                            <span class="badge">Trusted Platform</span>
+                            <span class="badge">Secure Payments</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div class="modal fade" id="authModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="authModalTitle">Welcome Back</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Login Form -->
+                    <form id="loginForm" class="auth-form">
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="loginEmail" placeholder="name@example.com" required>
+                            <label for="loginEmail">Email address</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="loginPassword" placeholder="Password" required>
+                            <label for="loginPassword">Password</label>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="rememberMe">
+                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                            </div>
+                            <a href="#" class="text-decoration-none">Forgot password?</a>
+                        </div>
+                        <button type="submit" class="btn btn-gradient w-100 mb-3">
+                            <span class="login-text">Sign In</span>
+                            <span class="loading hidden"></span>
+                        </button>
+                        <div class="text-center">
+                            <span class="text-muted">Don't have an account? </span>
+                            <a href="#" onclick="showAuthModal('signup')" class="text-decoration-none fw-semibold">Sign up</a>
+                        </div>
+                    </form>
+
+                    <!-- Signup Form -->
+                    <form id="signupForm" class="auth-form hidden">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="signupFirstName" placeholder="First Name" required>
+                                    <label for="signupFirstName">First Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="signupLastName" placeholder="Last Name" required>
+                                    <label for="signupLastName">Last Name</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="signupEmail" placeholder="name@example.com" required>
+                            <label for="signupEmail">Email address</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="signupPassword" placeholder="Password" required>
+                            <label for="signupPassword">Password</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="signupConfirmPassword" placeholder="Confirm Password" required>
+                            <label for="signupConfirmPassword">Confirm Password</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                            <label class="form-check-label" for="termsCheck">
+                                I agree to the <a href="#" class="text-decoration-none">Terms of Service</a> and <a href="#" class="text-decoration-none">Privacy Policy</a>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-gradient w-100 mb-3">
+                            <span class="signup-text">Create Account</span>
+                            <span class="loading hidden"></span>
+                        </button>
+                        <div class="text-center">
+                            <span class="text-muted">Already have an account? </span>
+                            <a href="#" onclick="showAuthModal('login')" class="text-decoration-none fw-semibold">Sign in</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    
+    <script src="script.js"></script>
+    <script type="module" src="script1.js"></script>
+</body>
+</html>
