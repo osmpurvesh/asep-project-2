@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tripnic Interests</title>
+  
+</head>
+<body>
+  <video autoplay muted loop id="bg-video"><source src="Tripnic_preference_bgvd.mp4" type="video/mp4"></video>
+  <div class="container">
+    <h>Choose 7-10 Travel Interests</h>
+    <div class="interest-grid">
+      <div class="interest" onclick="toggleSelection(this)"><img src="Beach.jpg" alt="Beach" class="interest-img" /><span>Beach</span></div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="Mountain.jpg" alt="Beach" class="interest-img" /><span>Mountains</span></div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="Cities.jpg" alt="Beach" class="interest-img" /><span>City</span> </div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="Nature.jpg" alt="Beach" class="interest-img" /><span>Nature</span> </div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="Adventure.jpg" alt="Beach" class="interest-img" /><span>Adventure</span> </div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="Culture.jpg" alt="Beach" class="interest-img" /><span>Culture</span></div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="Wildlife.jpg" alt="Beach" class="interest-img" /><span>Wildlife</span> </div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="Wellness.jpg" alt="Beach" class="interest-img" /><span>Wellness</span></div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="History.jpg" alt="Beach" class="interest-img" /><span>History</span></div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="Trekking.jpg" alt="Beach" class="interest-img" /><span>Trekking</span></div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="Camping.jpg" alt="Beach" class="interest-img" /><span>Camping</span></div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="Luxury.jpg" alt="Beach" class="interest-img" /><span>Luxury</span></div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="Spiritual.jpg" alt="Beach" class="interest-img" /><span>Spiritual</span></div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="Roadtrip.jpg" alt="Beach" class="interest-img" /><span>Roadtrip</span></div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="Photography.jpg" alt="Beach" class="interest-img" /><span>Photography</span></div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="Foodie.jpg" alt="Beach" class="interest-img" /><span>Foodie</span></div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="Shopping.jpg" alt="Beach" class="interest-img" /><span>Shopping</span></div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="Snowfall.jpg" alt="Beach" class="interest-img" /><span>Snowfall</span></div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="Desert.jpg" alt="Beach" class="interest-img" /><span>Desert</span></div>
+      <div class="interest" onclick="toggleSelection(this)"><img src="Backpacking.jpg" alt="Beach" class="interest-img" /><span>Backpacking</span></div>
+    </div>
+    <button class="btn btn-custom btn-lg me-3" onclick="submitSelection()">
+    Submit
+</button>
+    <p id="message"></p>
+  </div>
+  <script src="script.js"></script>
+  <script src="script1.js"></script>
+</body>
+<style>
+  body {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  background: #f2f2f2;
+  text-align: center;
+  color: azure;
+}
+#bg-video{
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1;
+  object-fit: cover;
+}
+.container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+  font-size: 35px;
+}
+
+.interest-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.interest {
+  
+  border: 2px solid transparent;
+  width: 270px;          
+  height: 270px;
+  padding: 50px 15px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.interest-img{
+  width: 260px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.interest:hover {
+      background-color: transparent;
+      transform: scale(1.1);
+    }
+
+.interest.selected {
+  background: #4CAF50;
+  color: white;
+  border-color: #4CAF50;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.btn-custom {
+        background: linear-gradient(45deg, var(--accent-color), #ff8a80);
+        border: none;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    }
+    .btn-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        color: white;
+    }
+</style>
+
+<script>
+    function toggleSelection(element) {
+  element.classList.toggle('selected');
+}
+
+function submitSelection() {
+  const selected = document.querySelectorAll('.interest.selected');
+  const message = document.getElementById('message');
+  
+  if (selected.length < 7 || selected.length > 10) {
+    message.textContent = "Please select between 7 and 10 interests.";
+    message.style.color = 'red';
+  } else {
+    const choices = Array.from(selected).map(el => el.textContent.trim());
+    message.textContent = "You selected: " + choices.join(', ');
+    message.style.color = 'green';
+
+    // Optional: send data to backend here
+    console.log("User Interests:", choices);
+    
+    // Redirect to dashboard after selection
+    window.location.href = 'dashboard.html';
+  }
+}
+</script>
+</html>

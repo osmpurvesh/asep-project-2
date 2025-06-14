@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tripnic Dashboard - Wallet</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Wallet Styles */
+        .wallet-card {
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: none;
+        }
+        
+        .wallet-header {
+            background-color: #4e73df;
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+        }
+        
+        .balance-display {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+        
+        .transaction-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+        
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+        
+        .transaction-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .transaction-item.deposit .amount {
+            color: #28a745;
+        }
+        
+        .transaction-item.payment .amount {
+            color: #dc3545;
+        }
+        
+        .transaction-history {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .action-btn {
+            min-width: 150px;
+            font-weight: 600;
+        }
+        
+        /* Custom Scrollbar */
+        .transaction-history::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .transaction-history::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .transaction-history::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 10px;
+        }
+        
+        /* Animation for balance update */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .balance-update {
+            animation: pulse 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Wallet Card -->
+                <div class="card wallet-card mb-4">
+                    <div class="card-header wallet-header py-3 d-flex justify-content-between align-items-center">
+                        <h5 class="m-0"><i class="fas fa-wallet me-2"></i>My Travel Wallet</h5>
+                        <span class="badge bg-light text-dark"><i class="fas fa-sync-alt me-1"></i>Live</span>
+                    </div>
+                    <div class="card-body">
+                        <!-- Balance Display -->
+                        <div class="text-center mb-4">
+                            <div class="text-muted mb-1">Available Balance</div>
+                            <h2 id="walletBalance" class="balance-display">$1,000.00</h2>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="d-flex justify-content-center gap-3 mb-4 flex-wrap">
+                            <button id="addFundsBtn" class="btn btn-success action-btn">
+                                <i class="fas fa-plus me-2"></i>Add Funds
+                            </button>
+                            <button id="sendMoneyBtn" class="btn btn-primary action-btn">
+                                <i class="fas fa-paper-plane me-2"></i>Send Money
+                            </button>
+                            <button id="requestMoneyBtn" class="btn btn-info action-btn">
+                                <i class="fas fa-hand-holding-usd me-2"></i>Request
+                            </button>
+                        </div>
+                        
+                        <!-- Transaction History -->
+                        <h6 class="border-bottom pb-2 mb-3 d-flex justify-content-between">
+                            <span><i class="fas fa-history me-2"></i>Transaction History</span>
+                            <span class="badge bg-secondary">${new Date().getFullYear()}</span>
+                        </h6>
+                        <div id="transactionHistory" class="transaction-history">
+                            <!-- Transactions will appear here dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Funds Modal -->
+    <div class="modal fade" id="addFundsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-plus-circle me-2"></i>Add Funds</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Amount (USD)</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" id="addAmount" min="1" step="0.01" placeholder="100.00">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Payment Method</label>
+                        <select class="form-select">
+                            <option selected>Credit/Debit Card</option>
+                            <option>Bank Transfer</option>
+                            <option>PayPal</option>
+                            <option>Cryptocurrency</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button id="confirmAddFunds" type="button" class="btn btn-success">
+                        <i class="fas fa-check me-1"></i>Add Funds
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Send Money Modal -->
+    <div class="modal fade" id="sendMoneyModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-paper-plane me-2"></i>Send Money</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Recipient Email</label>
+                        <input type="email" class="form-control" id="recipientEmail" placeholder="traveler@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Amount (USD)</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" id="sendAmount" min="1" step="0.01" placeholder="50.00">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Message (Optional)</label>
+                        <textarea class="form-control" placeholder="e.g., For our Bali trip expenses"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button id="confirmSendMoney" type="button" class="btn btn-primary">
+                        <i class="fas fa-paper-plane me-1"></i>Send Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap & jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Wallet JavaScript -->
+    <script>
+        class WalletSystem {
+            constructor() {
+                this.balance = 1000.00;
+                this.transactions = [
+                    { 
+                        id: 1, 
+                        type: 'deposit', 
+                        amount: 500.00, 
+                        date: '2023-10-15', 
+                        description: 'Initial deposit',
+                        icon: 'fa-coins'
+                    },
+                    { 
+                        id: 2, 
+                        type: 'payment', 
+                        amount: -150.00, 
+                        date: '2023-10-18', 
+                        description: 'Hotel booking',
+                        icon: 'fa-hotel'
+                    },
+                    { 
+                        id: 3, 
+                        type: 'deposit', 
+                        amount: 200.00, 
+                        date: '2023-10-20', 
+                        description: 'Trip refund',
+                        icon: 'fa-undo'
+                    },
+                    { 
+                        id: 4, 
+                        type: 'payment', 
+                        amount: -75.50, 
+                        date: '2023-10-22', 
+                        description: 'Dinner with travel group',
+                        icon: 'fa-utensils'
+                    }
+                ];
+                
+                this.init();
+            }
+
+            init() {
+                this.cacheDOM();
+                this.bindEvents();
+                this.render();
+            }
+
+            cacheDOM() {
+                this.$walletBalance = $('#walletBalance');
+                this.$transactionHistory = $('#transactionHistory');
+                this.$addFundsModal = new bootstrap.Modal('#addFundsModal');
+                this.$sendMoneyModal = new bootstrap.Modal('#sendMoneyModal');
+            }
+
+            bindEvents() {
+                $('#addFundsBtn').click(() => this.showAddFundsModal());
+                $('#sendMoneyBtn').click(() => this.showSendMoneyModal());
+                $('#confirmAddFunds').click(() => this.addFunds());
+                $('#confirmSendMoney').click(() => this.sendMoney());
+            }
+
+            render() {
+                this.updateBalance();
+                this.renderTransactions();
+            }
+
+            updateBalance() {
+                this.$walletBalance
+                    .addClass('balance-update')
+                    .text(`$${this.balance.toFixed(2)}`)
+                    .on('animationend', () => {
+                        this.$walletBalance.removeClass('balance-update');
+                    });
+            }
+
+            renderTransactions() {
+                this.$transactionHistory.html(
+                    this.transactions
+                        .sort((a, b) => new Date(b.date) - new Date(a.date))
+                        .map(tx => this.createTransactionHTML(tx))
+                        .join('')
+                );
+            }
+
+            createTransactionHTML(tx) {
+                const isPositive = tx.amount > 0;
+                const amountClass = isPositive ? 'text-success' : 'text-danger';
+                const amountSign = isPositive ? '+' : '';
+                const date = new Date(tx.date).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                });
+                
+                return `
+                    <div class="transaction-item ${tx.type}">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="me-3 text-muted">
+                                    <i class="fas ${tx.icon} fa-lg"></i>
+                                </div>
+                                <div>
+                                    <strong>${tx.description}</strong>
+                                    <div class="text-muted small">${date}</div>
+                                </div>
+                            </div>
+                            <div class="amount ${amountClass} fw-bold">
+                                ${amountSign}$${Math.abs(tx.amount).toFixed(2)}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            showAddFundsModal() {
+                $('#addAmount').val('');
+                this.$addFundsModal.show();
+            }
+
+            showSendMoneyModal() {
+                $('#sendAmount').val('');
+                $('#recipientEmail').val('');
+                this.$sendMoneyModal.show();
+            }
+
+            addFunds() {
+                const amount = parseFloat($('#addAmount').val());
+                
+                if (!this.validateAmount(amount)) {
+                    this.showAlert('Please enter a valid amount greater than $0', 'error');
+                    return;
+                }
+
+                this.balance += amount;
+                this.recordTransaction(
+                    'deposit', 
+                    amount, 
+                    'Funds added',
+                    'fa-plus-circle'
+                );
+                this.render();
+                this.$addFundsModal.hide();
+                this.showAlert(`Successfully added $${amount.toFixed(2)} to your wallet`, 'success');
+            }
+
+            sendMoney() {
+                const amount = parseFloat($('#sendAmount').val());
+                const recipient = $('#recipientEmail').val().trim();
+
+                if (!this.validateAmount(amount)) {
+                    this.showAlert('Please enter a valid amount greater than $0', 'error');
+                    return;
+                }
+
+                if (amount > this.balance) {
+                    this.showAlert('Insufficient funds in your wallet', 'error');
+                    return;
+                }
+
+                if (!this.validateEmail(recipient)) {
+                    this.showAlert('Please enter a valid email address', 'error');
+                    return;
+                }
+
+                this.balance -= amount;
+                this.recordTransaction(
+                    'payment', 
+                    -amount, 
+                    `Payment to ${recipient}`,
+                    'fa-user'
+                );
+                this.render();
+                this.$sendMoneyModal.hide();
+                this.showAlert(`Successfully sent $${amount.toFixed(2)} to ${recipient}`, 'success');
+            }
+
+            recordTransaction(type, amount, description, icon) {
+                this.transactions.push({
+                    id: this.transactions.length + 1,
+                    type,
+                    amount,
+                    date: new Date().toISOString().split('T')[0],
+                    description,
+                    icon
+                });
+            }
+
+            validateAmount(amount) {
+                return !isNaN(amount) && amount > 0;
+            }
+
+            validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            showAlert(message, type) {
+                // In a real app, replace with your notification system
+                const icon = {
+                    success: 'fa-check-circle',
+                    error: 'fa-exclamation-circle',
+                    info: 'fa-info-circle'
+                }[type];
+                
+                const alertHtml = `
+                    <div class="alert alert-${type} alert-dismissible fade show position-fixed bottom-0 end-0 m-3">
+                        <i class="fas ${icon} me-2"></i>
+                        ${message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                `;
+                
+                $('body').append(alertHtml);
+                setTimeout(() => $('.alert').alert('close'), 5000);
+            }
+        }
+
+        // Initialize wallet when page loads
+        $(document).ready(() => {
+            window.wallet = new WalletSystem();
+        });
+    </script>
+</body>
+</html>

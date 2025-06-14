@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tripnic - Smart Travel Companion </title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-map-marked-alt"></i> Tripnic</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#how-it-works">How It Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="preference.html">Travel Interests</a>
+                    </li>
+                    <li class="nav-item" id="loginNav">
+                        <button class="btn btn-outline-primary me-2" onclick="showAuthModal('login')">Login</button>
+                    </li>
+                    <li class="nav-item" id="signupNav">
+                        <button class="btn btn-custom" onclick="showAuthModal('signup')">Sign Up</button>
+                    </li>
+                    <li class="nav-item dropdown hidden" id="userNav">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle"></i> <span id="userName">User</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" onclick="showDashboard()">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-content">
+                    <h1 class="hero-title">Find Your Perfect Travel Companion</h1>
+                    <p class="hero-subtitle">Connect with like-minded travelers, plan amazing trips together, and create unforgettable memories with Tripnic's intelligent matching system.</p>
+                    <button class="btn btn-custom btn-lg me-3" onclick="showAuthModal('signup')">
+                        <i class="fas fa-rocket"></i> Start Your Journey
+                    </button>
+                    <button class="btn btn-outline-light btn-lg" onclick="document.getElementById('features').scrollIntoView()">
+                        <i class="fas fa-play-circle"></i> Learn More
+                    </button>
+                </div>
+                <div class="col-lg-6">
+                    <div class="text-center">
+                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 400'><rect fill='%23f8f9fa' width='500' height='400' rx='20'/><circle cx='150' cy='150' r='60' fill='%23667eea'/><circle cx='350' cy='150' r='60' fill='%23764ba2'/><path d='M150 210 L350 210' stroke='%23ff6b6b' stroke-width='4'/><text x='250' y='280' text-anchor='middle' font-size='24' fill='%232c3e50'>Travel Together</text></svg>" alt="Travel Companions" class="img-fluid" style="max-width: 400px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="display-4 fw-bold mb-3">Why Choose Tripnic?</h2>
+                    <p class="lead text-muted">Discover the features that make travel planning effortless and social</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4 class="text-center mb-3">Smart Matching</h4>
+                        <p class="text-center text-muted">Our intelligent algorithm matches you with compatible travel companions based on your preferences, budget, and travel style.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h4 class="text-center mb-3">Real-time Chat</h4>
+                        <p class="text-center text-muted">Connect instantly with potential travel buddies through our secure, real-time messaging system.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <h4 class="text-center mb-3">Itinerary Planning</h4>
+                        <p class="text-center text-muted">Collaboratively create detailed itineraries with integrated maps, activities, and budget tracking.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4 class="text-center mb-3">Safe & Secure</h4>
+                        <p class="text-center text-muted">Verified profiles, encrypted messaging, and community reviews ensure your safety and peace of mind.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h4 class="text-center mb-3">Budget Tracking</h4>
+                        <p class="text-center text-muted">Keep track of shared expenses and individual budgets with our built-in expense management tools.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h4 class="text-center mb-3">Mobile Friendly</h4>
+                        <p class="text-center text-muted">Access Tripnic anywhere, anytime with our responsive design that works perfectly on all devices.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="display-4 fw-bold mb-3">How It Works</h2>
+                    <p class="lead text-muted">Get started in just three simple steps</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 text-center mb-4">
+                    <div class="feature-icon mx-auto mb-3">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h4>1. Create Your Profile</h4>
+                    <p class="text-muted">Tell us about your travel preferences, interests, and budget to help us find your perfect match.</p>
+                </div>
+                <div class="col-lg-4 text-center mb-4">
+                    <div class="feature-icon mx-auto mb-3">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h4>2. Find Your Match</h4>
+                    <p class="text-muted">Browse through compatible travelers or let our algorithm suggest the best matches for you.</p>
+                </div>
+                <div class="col-lg-4 text-center mb-4">
+                    <div class="feature-icon mx-auto mb-3">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <h4>3. Plan & Travel</h4>
+                    <p class="text-muted">Connect with your travel buddies, plan your itinerary together, and embark on amazing adventures.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Auth Modal -->
+    <div class="modal fade" id="authModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="authModalTitle">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Login Form -->
+                    <form id="loginForm" class="auth-form">
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-custom w-100">
+                            <span class="login-text">Login</span>
+                            <span class="loading hidden"></span>
+                        </button>
+                        <p class="text-center mt-3">
+                            Don't have an account? 
+                            <a href="#" onclick="showAuthModal('signup')" class="text-decoration-none">Sign up</a>
+                        </p>
+                    </form>
+
+                    <!-- Signup Form -->
+                    <form id="signupForm" class="auth-form hidden">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="signupFirstName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="signupLastName" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="signupEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" id="signupPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="signupConfirmPassword" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                            <label class="form-check-label" for="termsCheck">
+                                I agree to the Terms of Service and Privacy Policy
+                            </label>
+                        </div>
+                        <button type="submit" id="submit" class="btn btn-custom w-100">
+                            <span class="signup-text">Create Account</span>
+                            <span class="loading hidden"></span>
+                        </button>
+                        <p class="text-center mt-3">
+                            Already have an account? 
+                            <a href="#" onclick="showAuthModal('login')" class="text-decoration-none">Login</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Chat Button -->
+    <div class="floating-chat hidden" id="floatingChat">
+        <button class="chat-toggle" onclick="toggleFloatingChat()">
+            <i class="fas fa-comments"></i>
+        </button>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer"></div>
+
+    
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script type="module" src="script1.js" defer></script>
+</body>
+</html>
